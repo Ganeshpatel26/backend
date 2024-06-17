@@ -310,6 +310,36 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// app.post('/signup', async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     if (!email || !password) {
+//       return res.status(400).json({ error: 'Email and password are required' });
+//     }
+
+//     const existingUser = await EmployeeModel.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ error: 'User already exists' });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const employee = new EmployeeModel({
+//       email,
+//       password: hashedPassword,
+//       // include other required fields
+//     });
+
+//     await employee.save();
+//     res.status(201).json(employee);
+//   } catch (err) {
+//     console.error('Signup error:', err);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+
 app.post('/signup', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -334,10 +364,12 @@ app.post('/signup', async (req, res) => {
     await employee.save();
     res.status(201).json(employee);
   } catch (err) {
-    console.error('Signup error:', err);
+    console.error('Signup error:', err); // Detailed error logging
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
 
 // Bill Management Routes
 app.get('/bills', async (req, res) => {
