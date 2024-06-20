@@ -23,10 +23,23 @@ app.use(cors({
 }));
 
 // Connect to MongoDB
+// mongoose.connect(process.env.MONGODB_URI)
+//   .then(() => console.log('MongoDB connected'))
+//   .catch((err) => {
+//     console.error('Error connecting to MongoDB:', err);
+//     process.exit(1); // Exit process if unable to connect to database
+//   });
+
+
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => {
     console.error('Error connecting to MongoDB:', err);
+    if (err.name === 'MongoNetworkError') {
+      console.error('Network error. Check if your IP address is whitelisted and the server is accessible.');
+    } else if (err.name === 'MongooseServerSelectionError') {
+      console.error('Server selection error. Check if your MongoDB URI is correct and the cluster is running.');
+    }
     process.exit(1); // Exit process if unable to connect to database
   });
 
