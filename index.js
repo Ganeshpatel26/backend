@@ -12,15 +12,24 @@ const app = express();
 const PORT = process.env.PORT || 3005;
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
+// CORS middleware configuration
+app.use(function (req, res, next) {
+  // Enabling CORS
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+  next();
+});
+
 app.use(express.json());
 app.use(bodyParser.json());
 
 // Use CORS and specify the allowed origin
-app.use(cors({
-  origin: 'https://billingmernstack.netlify.app', // Replace this with your Netlify app's URL
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: 'https://billingmernstack.netlify.app', // Replace this with your Netlify app's URL
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true,
+// }));
 
 // Connect to MongoDB
 // mongoose.connect(process.env.MONGODB_URI)
